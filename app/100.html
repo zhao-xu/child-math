@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="cmn-Hans-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no">
+    <meta name="HandheldFriendly" content="true">
+    <link rel="stylesheet" href="../lib/css/bootstrap-4.1.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <title>一百内加减法</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container-fluid v-center">
+    <div class="row v-center">
+        <div class="col-1"></div>
+        <div class="col text-center">
+            <div>
+                <span id="currentPane"></span> / <span id="totalPane"></span>
+                <br>
+                正确：<span id="correctCountPane" class="text-primary"></span>&emsp;错误：<span id="wrongCountPane" class="text-danger"></span>
+            </div>
+            <div class="display-1 text-center">
+                <span id="xPane"></span> <span id="signPane"></span> <span id="yPane"></span>
+            </div>
+            <div class="display-4 text-center">
+                <span id="answerPane" class="text-primary display-1"></span>
+            </div>
+            <div>
+                <button class="btn btn-primary btn-lg" id="next">下一题</button>
+            </div>
+        </div>
+        <div class="col keyboard">
+            <div class="row">
+                <div class="col-sm">
+                    <button class="btn btn-outline-secondary" data-action="7">7</button>
+                    <button class="btn btn-outline-secondary" data-action="8">8</button>
+                    <button class="btn btn-outline-secondary" data-action="9">9</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <button class="btn btn-outline-secondary" data-action="4">4</button>
+                    <button class="btn btn-outline-secondary" data-action="5">5</button>
+                    <button class="btn btn-outline-secondary" data-action="6">6</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <button class="btn btn-outline-secondary" data-action="1">1</button>
+                    <button class="btn btn-outline-secondary" data-action="2">2</button>
+                    <button class="btn btn-outline-secondary" data-action="3">3</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm">
+                    <button class="btn btn-danger" data-action="c">C</button>
+                    <button class="btn btn-outline-secondary" data-action="0">0</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../lib/js/jquery-3.3.1.min.js"></script>
+<script src="../lib/js/bootstrap.bundle-4.1.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+    $(() => {
+        const total = 100;
+        let current = 0;
+        let correctCount = 0, wrongCount = 0;
+        let correctAnswer = 0;
+        const xPane = $('#xPane'), yPane = $('#yPane'), signPane = $('#signPane');
+        const currentPane = $('#currentPane');
+        $('#totalPane').text(total);
+        const correctCountPane = $('#correctCountPane');
+        const wrongCountPane = $('#wrongCountPane');
+        const randomQuestion = () => {
+            if (++current > total) {
+                return true;
+            }
+            let x = nextInt(10, 90);
+            let y = nextInt(1, 99 - x);
+            correctAnswer = x + y;
+            let sign = nextInt(0, 1);
+            if (sign) {
+                signPane.text('+');
+            } else {
+                let t = correctAnswer;
+                correctAnswer = x;
+                x = t;
+                signPane.text('-')
+            }
+            xPane.text(x);
+            yPane.text(y);
+            currentPane.text(current);
+            answer = '';
+            answerPane.text('');
+            return false;
+        };
+        $('#next').on('click', () => {
+            if (answer !== '') {
+                if (+answer === correctAnswer) {
+                    correctCount++;
+                } else {
+                    wrongCount++;
+                }
+                correctCountPane.text(correctCount);
+                wrongCountPane.text(wrongCount);
+                finished = randomQuestion();
+                if (finished) {
+                    $('#next').hide();
+                }
+            }
+        });
+        randomQuestion();
+    })
+</script>
+</body>
+</html>
