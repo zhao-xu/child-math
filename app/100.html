@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="cmn-Hans-CN">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no">
-    <meta name="HandheldFriendly" content="true">
-    <link rel="stylesheet" href="../lib/css/bootstrap-4.1.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
     <link rel="stylesheet" href="css/app.css">
     <title>一百内加减法</title>
     <style>
@@ -14,58 +13,71 @@
     </style>
 </head>
 <body>
-<div class="container-fluid v-center">
-    <div class="row v-center">
-        <div class="col-1"></div>
-        <div class="col text-center">
+<div class="container" style="height:100%">
+    <div class="row align-items-center" style="height:100%">
+        <div class="col-12 col-sm-6">
             <div>
                 <span id="currentPane"></span> / <span id="totalPane"></span>
                 <br>
                 正确：<span id="correctCountPane" class="text-primary"></span>&emsp;错误：<span id="wrongCountPane" class="text-danger"></span>
             </div>
-            <div class="display-1 text-center">
+            <div class="display-3 text-center">
                 <span id="xPane"></span> <span id="signPane"></span> <span id="yPane"></span>
             </div>
-            <div class="display-4 text-center">
-                <span id="answerPane" class="text-primary display-1"></span>
-            </div>
-            <div>
-                <button class="btn btn-primary btn-lg" id="next">下一题</button>
+            <div class="display-3 text-center">
+                <span id="answerPane" class="text-primary"></span>
             </div>
         </div>
-        <div class="col keyboard">
-            <div class="row">
-                <div class="col-sm">
-                    <button class="btn btn-outline-secondary" data-action="7">7</button>
-                    <button class="btn btn-outline-secondary" data-action="8">8</button>
-                    <button class="btn btn-outline-secondary" data-action="9">9</button>
+        <div class="col-12 col-sm-6 keyboard" style="font-size:3rem;">
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="7">7</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="8">8</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-right" data-action="9">9</div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm">
-                    <button class="btn btn-outline-secondary" data-action="4">4</button>
-                    <button class="btn btn-outline-secondary" data-action="5">5</button>
-                    <button class="btn btn-outline-secondary" data-action="6">6</button>
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="4">4</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="5">5</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-right" data-action="6">6</div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm">
-                    <button class="btn btn-outline-secondary" data-action="1">1</button>
-                    <button class="btn btn-outline-secondary" data-action="2">2</button>
-                    <button class="btn btn-outline-secondary" data-action="3">3</button>
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="1">1</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="2">2</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-right" data-action="3">3</div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-sm">
-                    <button class="btn btn-danger" data-action="c">C</button>
-                    <button class="btn btn-outline-secondary" data-action="0">0</button>
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <div class="key border-top border-left border-bottom" id="next" data-action="ok" style="color:blue">✔️</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-bottom" data-action="0">0</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-bottom border-right" data-action="cancel">❌</div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <script src="../lib/js/jquery-3.3.1.min.js"></script>
-<script src="../lib/js/bootstrap.bundle-4.1.min.js"></script>
+<script src="../lib/js/bootstrap.bundle.min.js"></script>
 <script src="js/app.js"></script>
 <script>
     $(() => {

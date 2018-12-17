@@ -1,14 +1,13 @@
 body {
     touch-action: manipulation;
 }
-.keyboard .row {
-    margin-top: 4px;
-    margin-bottom: 4px;
-}
 .keyboard .btn {
     width: 7rem;
     height: 7rem;
     font-size: 3rem !important;
+}
+.keyboard .key {
+    text-align: center;
 }
 #answerPane:after {
     content: '\200b';

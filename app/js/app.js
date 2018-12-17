@@ -2,15 +2,18 @@ let answer = '';
 const answerPane = $('#answerPane');
 let finished = false;
 $(() => {
-    $('.keyboard button[data-action]').on('click', e => {
-        if (finished || answer.length > 5) {
+    $('.keyboard button[data-action], .keyboard .key[data-action]').on('click', e => {
+        if (finished) {
             return;
         }
         const btn = $(e.currentTarget);
         const action = '' + btn.data('action');
         switch (action) {
             case 'c':
+            case 'cancel':
                 answer = '';
+                break;
+            case 'ok':
                 break;
             default:
                 answer += action;
