@@ -1,3 +1,8 @@
+@media (min-width: 576px) {
+    .container {
+        max-width: 700px;
+    }
+}
 body {
     touch-action: manipulation;
 }
