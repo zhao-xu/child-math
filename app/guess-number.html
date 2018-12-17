@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+    <link rel="stylesheet" href="../lib/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/app.css">
+    <title>猜数字</title>
+    <style>
+        html, body {
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+<div class="container" style="height:100%">
+    <div class="row align-items-center" style="height:100%">
+        <div class="col-12 col-sm-6">
+            <div>
+                <button class="btn btn-flat btn-outline-primary" id="showHistoryButton">显示猜测记录</button>
+            </div>
+            <div class="display-1 text-center">
+                <span id="answerPane" class="text-primary"></span>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 keyboard" style="font-size:3rem;">
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="7">7</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="8">8</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-right" data-action="9">9</div>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="4">4</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="5">5</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-right" data-action="6">6</div>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="1">1</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left" data-action="2">2</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-right" data-action="3">3</div>
+                </div>
+            </div>
+            <div class="row no-gutters">
+                <div class="col-4">
+                    <div class="key border-top border-left border-bottom" id="next" data-action="ok" style="color:blue">✔️</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-bottom" data-action="0">0</div>
+                </div>
+                <div class="col-4">
+                    <div class="key border-top border-left border-bottom border-right" data-action="cancel">❌</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="historyModal" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="historyPane">
+                <div>1234 => 1A2B</div>
+                <div>1234 => 1A2B</div>
+                <div>1234 => 1A2B</div>
+                <div>1234 => 1A2B</div>
+                <div>1234 => 1A2B</div>
+                <div>1234 => 1A2B</div>
+                <div>1234 => 1A2B</div>
+                <div>1234 => 1A2B</div>
+                <div>1234 => 1A2B</div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../lib/js/jquery-3.3.1.min.js"></script>
+<script src="../lib/js/bootstrap.bundle.min.js"></script>
+<script src="js/app.js"></script>
+<script>
+    const randomNumber = () => {
+        let ret = [];
+        for (let i = 0; i < 10; i++) {
+            ret[i] = -1;
+        }
+        for (let i = 0; i < 4; i++) {
+            let x;
+            do {
+                x = nextInt(0, 9);
+            } while (ret[x] !== -1);
+            ret[x] = i;
+        }
+        return ret;
+    };
+    const printNumber = n => {
+        console.log(n);
+        let ret = [-1, -1, -1, -1];
+        for (let i = 0; i < 10; i++) {
+            if (n[i] !== -1) {
+                ret[n[i]] = i;
+            }
+        }
+        console.log(ret);
+    };
+    const test = () => {
+        let x = randomNumber();
+        printNumber(x);
+    };
+    const compareNumber = (answer, guess) => {
+        let a = 0, b = 0;
+        for (let i = 0; i < guess.length; i++) {
+            let x = +guess[i];
+            if (answer[x] === i) {
+                a++;
+            } else if (answer[x] !== -1) {
+                b++;
+            }
+        }
+        return [a, b];
+    };
+    $(() => {
+        let secretNumber = randomNumber();
+        let guessHistory = [];
+        const historyPane = $('#historyPane');
+        const showHistory = () => {
+            historyPane.empty();
+            for (let i = 0; i < guessHistory.length; i++) {
+                let history = guessHistory[i];
+                $('<div></div>').text(history[0] + ' = ' + history[1] + 'A' + history[2] + 'B').appendTo(historyPane);
+            }
+            $('#historyModal').modal('show');
+        };
+        $('#next').on('click', () => {
+            if (answer === '') {
+                alert('输入你猜的数字');
+                return ;
+            }
+            if (answer.length !== 4) {
+                alert('答案是四位数字');
+                return ;
+            }
+            let temp = [];
+            for (let i = 0; i < 4; i++) {
+                let x = +answer[i];
+                if (temp[x]) {
+                    alert('答案中没有重复的数字');
+                    return ;
+                }
+                temp[x] = true;
+            }
+            let [a, b] = compareNumber(secretNumber, answer);
+            guessHistory.push([answer, a, b]);
+            if (a === 4) {
+                alert('恭喜你，答对啦！答案是 ' + answer);
+            } else {
+                showHistory();
+                answer = '';
+                answerPane.text('');
+            }
+            console.log(guessHistory);
+        });
+        $('#showHistoryButton').on('click', showHistory);
+    })
+</script>
+</body>
+</html>

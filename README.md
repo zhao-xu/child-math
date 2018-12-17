@@ -3,6 +3,7 @@
 * 小九九  
 * 100 以内加减法  
 * 100 以内加减法混合  
+* 猜数字  
 
 在线练习  
 [https://zhao-xu.github.io/child-math/](https://zhao-xu.github.io/child-math/)
